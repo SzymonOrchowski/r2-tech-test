@@ -1,4 +1,5 @@
 const db = require('../db')
+const { reduceDuplicatedIngredient } = require('../utils/utils')
 
 exports.fetchAllRecipes = (exclude_ingredients) => {
     let sqlQuery = `SELECT * FROM recipes`
@@ -25,7 +26,7 @@ exports.fetchAllRecipes = (exclude_ingredients) => {
     return db
     .query(sqlQuery, safeArray)
     .then(({rows}) => {
-        rows.map(recipe => {recipe.ingredients = JSON.parse(recipe.ingredients)})
+        rows.map(recipe => {recipe.ingredients = reduceDuplicatedIngredient(JSON.parse(recipe.ingredients))})
         return rows
     })
 }
@@ -36,7 +37,7 @@ exports.getRecipeById = (id) => {
     return db
     .query(sqlQuery, [`recipe-${id}`])
     .then(({rows}) => {
-        rows.map(recipe => {recipe.ingredients = JSON.parse(recipe.ingredients)})
+        rows.map(recipe => {recipe.ingredients = reduceDuplicatedIngredient(JSON.parse(recipe.ingredients))})
         return rows
     })
 }
