@@ -20,4 +20,9 @@ describe('api-endpoints-test', () => {
       expect(Array.isArray(body.recipes)).toBe(true);
       expect(body.recipes.length).toBeGreaterThan(0);
     });
+    test('/api/recipes reacts to exclude_ingredients query and results with reduced number of results', async () => {
+      const fullDatabase = await request.get('/api/recipes');
+      const reducedDatabase = await request.get('/api/recipes?exclude_ingredients=flax,kale,lime,double cream,cocoa nibs');
+      expect(fullDatabase.body.recipes.length).toBeGreaterThan(reducedDatabase.body.recipes.length);
+    });
 })
