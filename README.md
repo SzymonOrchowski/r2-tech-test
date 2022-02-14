@@ -1,25 +1,42 @@
 # README - Lizzo’s Juicy Juice Bar - The Server
 
-## Prerequisites
+Version 1.0 coded by Szymon Orchowski
 
-- Node
-- npm
+Requirements:
+>Node - v16.14.0</br>
+>PostgreSQL - 13.4
 
-## Getting Started
+Coded and tested only for happypath so far.
+Error handling controllers, and test need to be implemented.
 
-Before attempting anything, ensure you have run `npm i` in this directory to install all dependencies.
+<h1>Endpoints:</h1>
 
-## Testing
+<h3>/api/recipes</h3>
 
-All tests are in the `test` directory. We use `jest` and `supertest` to test our server. Run `npm t` to execute tests.
+GET - return all recipes from the database
 
-## Running Dev Server
+it takes query of "exclude_ingredients" to exclude recipes that has certain ingredients (separated by commas)
+example:
+> /api/recipes?exclude_ingredients=bananas,strawberries,coffee,milk,oat milk,apple juice
 
-Run `npm run dev` to run the development server. It is configured to run on localhost:9090 by default.
+POST - you can add a recipe to the database
 
-## Endpoints
+request should include a JSON object that looks exactly like following example:
 
-- `/api`
-  - GET - Returns a 200 and an `ok` message when the server is online
+```json
+{
+  "imageUrl": "http://www.images.com/13456734567",
+  "instructions": "instructions",
+  "ingredients": [
+    { "name": "ingredient1", "grams": 25},
+    { "name": "ingredient2", "grams": 66},
+    { "name": "ingredient3", "grams": 44},
+    { "name": "ingredient4", "grams": 198}
+  ]
+}
+```
 
-(P.S. If you're looking for the instructions, check out INSTRUCTIONS.md)
+
+<h3>/api/recipes/:id</h3>
+
+GET - return a single recipe of a given id from the database
