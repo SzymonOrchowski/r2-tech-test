@@ -1,4 +1,5 @@
 const db = require('../')
+const format = require('pg-format')
 
 const seed = (data) => {
     return db
@@ -11,6 +12,15 @@ const seed = (data) => {
             imageUrl VARCHAR(255),
             instructions TEXT,
             ingredients TEXT);`)
+    })
+    .then(()=>{
+        return db
+        .query(
+            format(`INSERT INTO recipes (original_id, imageUrl, instructions, ingredients) VALUES %L;`,
+            data.map(recipe => {
+                return [recipe.id, recipe.imageUrl, recipe.instructions, JSON.stringify(recipe.ingredients)]
+            }))
+        )
     })
 }
 
