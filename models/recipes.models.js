@@ -29,3 +29,14 @@ exports.fetchAllRecipes = (exclude_ingredients) => {
         return rows
     })
 }
+
+exports.getRecipeById = (id) => {
+    let sqlQuery = `SELECT * FROM recipes WHERE original_id LIKE $1`
+
+    return db
+    .query(sqlQuery, [`recipe-${id}`])
+    .then(({rows}) => {
+        rows.map(recipe => {recipe.ingredients = JSON.parse(recipe.ingredients)})
+        return rows
+    })
+}
