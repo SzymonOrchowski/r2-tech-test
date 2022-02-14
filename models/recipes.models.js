@@ -40,3 +40,20 @@ exports.getRecipeById = (id) => {
         return rows
     })
 }
+
+exports.addRecipe = (body) => {
+    return db
+    .query('SELECT * FROM recipes')
+    .then(({rows}) => {
+        recipe = [`recipe-${rows.length}`, body.imageUrl, body.instructions, JSON.stringify(body.ingredients)]
+        
+        sqlQuery = `INSERT INTO recipes (original_id, imageurl, instructions, ingredients) VALUES ($1, $2, $3, $4) RETURNING *`
+
+        return db
+        .query(sqlQuery, recipe)
+        .then(({rows}) => {
+            rows.map(recipe => {recipe.ingredients = JSON.parse(recipe.ingredients)})
+            return rows[0]
+        })
+    })
+}
