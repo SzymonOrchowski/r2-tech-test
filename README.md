@@ -9,6 +9,37 @@ Requirements:
 Coded and tested only for happypath so far.
 Error handling controllers, and test need to be implemented.
 
+Server is prepared for hosting and works on test, development, and production databases.
+
+<h1>Instructions:</h1>
+
+Install all dependencies
+
+> npm i
+
+Create enviromental files:
+
+> .env.dev<br/>
+> .env.test
+
+and they should look like following lines:
+
+> PGDATABASE=juicy_juice_bar_database
+
+> PGDATABASE=juicy_juice_bar_database
+
+setup a database:
+
+> npm run setup-dbs
+
+Now you can run a test suite:
+
+> npm run test
+
+Or you can seed a data to database by running following script and test the server in e.g Insomnia on local port: 9090
+
+> npm run seed
+
 <h1>Endpoints:</h1>
 
 <h3>/api/recipes</h3>
