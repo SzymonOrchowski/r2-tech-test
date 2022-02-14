@@ -10,7 +10,14 @@ const { seed } = require('../db/seeds/seed');
 beforeEach(async () => await seed(testData) )
 afterAll(async () => await db.end() )
 
-test('/api', async () => {
-  const { body } = await request.get('/api').expect(200);
-  expect(body.message).toBe('ok');
-});
+describe('api-endpoints-test', () => {
+    test('/api', async () => {
+      const { body } = await request.get('/api').expect(200);
+      expect(body.message).toBe('ok');
+    });
+    test('/api/recipes respond with status code 200, and an array of objects', async () => {
+      const { body } = await request.get('/api/recipes').expect(200);
+      expect(Array.isArray(body.recipes)).toBe(true);
+      expect(body.recipes.length).toBeGreaterThan(0);
+    });
+})
